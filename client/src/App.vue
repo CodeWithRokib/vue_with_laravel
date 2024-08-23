@@ -15,7 +15,6 @@ export default {
 </script>
 
 <style>
-/* Add some basic styling */
 nav {
   margin-bottom: 20px;
 }
