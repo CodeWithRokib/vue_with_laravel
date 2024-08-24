@@ -4,6 +4,7 @@ import About from "../views/About.vue";
 import HelloWorld from "../components/HelloWorld.vue";
 import Register from "../views/Register.vue";
 import Login from "../views/Login.vue";
+import ContactForm from "../views/ContactForm.vue";
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register,
+  },
+  {
+    path: "/contactForm",
+    name: "contactForm",
+    component: ContactForm,
   },
 ];
 
