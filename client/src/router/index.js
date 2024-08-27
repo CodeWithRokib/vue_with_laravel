@@ -7,6 +7,7 @@ import Login from "../views/Login.vue";
 import ContactForm from "../views/ContactForm.vue";
 import Reservation from "../views/Reservation.vue";
 import ReservationUpdate from "../views/ReservationUpdate.vue";
+import ContactUpdate from "../views/ContactUpdate.vue";
 
 const routes = [
   {
@@ -39,6 +40,12 @@ const routes = [
     name: "contactForm",
     component: ContactForm,
   },
+  {
+    path: '/contacts/:id/edit',
+    name: 'ContactUpdate',
+    component: ContactUpdate,
+    props: true
+},
   {
     path: "/reservation",
     name: "Reservation",
