@@ -41,6 +41,8 @@
                 <strong>{{ reservation.name }}</strong> - {{ reservation.email }} - {{ reservation.phone }}<br />
                 {{ reservation.date }} at {{ reservation.time }} - {{ reservation.people }} people<br />
                 <em>{{ reservation.message }}</em> - Status: {{ reservation.status }}
+                <button @click="editReservation(reservation.id)">Edit</button>
+                <button @click="deleteReservation(reservation.id)">Delete</button>
             </li>
         </ul>
     </div>
@@ -48,6 +50,7 @@
 
 <script>
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 
 export default {
     data() {
@@ -64,6 +67,10 @@ export default {
             },
             reservations: [] // To store all the reservations
         };
+    },
+    setup() {
+        const router = useRouter();
+        return { router };
     },
     methods: {
         async submitForm() {
@@ -84,6 +91,21 @@ export default {
             } catch (error) {
                 console.error('There was an error fetching the reservations!', error);
             }
+        },
+        async deleteReservation(id) {
+            if (confirm('Are you sure you want to delete this reservation?')) {
+                try {
+                    const response = await axios.delete(`http://localhost:8000/api/reservations/${id}`);
+                    alert(response.data.message);
+                    this.fetchReservations(); // Refresh the list after deletion
+                } catch (error) {
+                    console.error('There was an error deleting the reservation!', error.response.data);
+                    alert('Error: ' + (error.response.data.message || 'Unknown error'));
+                }
+            }
+        },
+        editReservation(id) {
+            this.$router.push(`/reservations/${id}/edit`);
         },
         resetForm() {
             this.reservation = {

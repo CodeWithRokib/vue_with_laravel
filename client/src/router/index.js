@@ -6,6 +6,7 @@ import Register from "../views/Register.vue";
 import Login from "../views/Login.vue";
 import ContactForm from "../views/ContactForm.vue";
 import Reservation from "../views/Reservation.vue";
+import ReservationUpdate from "../views/ReservationUpdate.vue";
 
 const routes = [
   {
@@ -43,6 +44,12 @@ const routes = [
     name: "Reservation",
     component: Reservation,
   },
+  {
+    path: '/reservations/:id/edit',
+    name: 'ReservationUpdate',
+    component: ReservationUpdate,
+    props: true
+},
 ];
 
 const router = createRouter({
