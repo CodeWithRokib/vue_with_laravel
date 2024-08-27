@@ -28,6 +28,8 @@
             <li v-for="contact in contacts" :key="contact.id">
                 <strong>{{ contact.name }}</strong> - {{ contact.email }} - {{ contact.phone }}<br />
                 <em>{{ contact.description }}</em>
+                <button @click="editContact(contact.id)">Edit</button>
+                <button @click="deleteContact(contact.id)">Delete</button>
             </li>
         </ul>
     </div>
@@ -35,6 +37,7 @@
 
 <script>
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 
 export default {
     data() {
@@ -47,6 +50,10 @@ export default {
             },
             contacts: [] // To store all the contacts
         };
+    },
+    setup() {
+        const router = useRouter();
+        return { router };
     },
     methods: {
         async submitForm() {
@@ -67,6 +74,21 @@ export default {
             } catch (error) {
                 console.error('There was an error fetching the contacts!', error);
             }
+        },
+        async deleteContact(id) {
+            if (confirm('Are you sure you want to delete this contact?')) {
+                try {
+                    const response = await axios.delete(`http://localhost:8000/api/contacts/${id}`);
+                    alert(response.data.message);
+                    this.fetchContacts(); // Refresh the list after deletion
+                } catch (error) {
+                    console.error('There was an error deleting the contact!', error.response.data);
+                    alert('Error: ' + (error.response.data.message || 'Unknown error'));
+                }
+            }
+        },
+        editContact(id) {
+            this.$router.push(`/contacts/${id}/edit`);
         },
         resetForm() {
             this.contact = {
